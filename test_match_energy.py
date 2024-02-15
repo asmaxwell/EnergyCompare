@@ -73,10 +73,14 @@ def test_not_match():
     Marvel_row = Marvel_data.iloc[5]
     tag = Marvel_row.name
     energy = Marvel_row[Marvel_energy_col]
-    partial_comb = match_energy.combine_rows(Marvel_row, ExMol_data, Marvel_energy_col, ExMol_energy_col)
+    #with pytest.warns(UserWarning, match=r"no match for tag = \d+"):
+    with pytest.warns(Warning) as record:
+        partial_comb = match_energy.combine_rows(Marvel_row, ExMol_data, Marvel_energy_col, ExMol_energy_col)
+        if not record:
+            pytest.fail("Warning should be given when there is no match")
 
     assert(partial_comb.name == tag)
     #check if warning raised
-    with pytest.warns(UserWarning, match=r"Warning no match for tag = .*"):
-        warnings.warn("my warning", UserWarning)
+    
+        
     return
