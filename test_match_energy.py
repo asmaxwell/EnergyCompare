@@ -6,11 +6,11 @@ import pandas as pd\
 @pytest.fixture(scope='session') 
 def load_files():
     data_path = "data/"
-    Marvel_filename = "MARVEL_out_tag_nosym" 
-    ExoMol_filename = "C2H2_states_cut_sort_tag_nosym"
+    Marvel_filename = "MARVEL_out_tag_nosym_test" 
+    ExoMol_filename = "C2H2_states_cut_sort_tag_nosym_test"
 
-    Marvel_data = pd.read_csv(data_path + Marvel_filename, delim_whitespace=True, header=None, index_col=15, nrows=250)
-    ExMol_data = pd.read_csv(data_path + ExoMol_filename, delim_whitespace=True, header=None, index_col=20, nrows=5000)
+    Marvel_data = pd.read_csv(data_path + Marvel_filename, delim_whitespace=True, header=None, index_col=15, nrows=500)
+    ExMol_data = pd.read_csv(data_path + ExoMol_filename, delim_whitespace=True, header=None, index_col=20, nrows=2000)
     yield Marvel_data, ExMol_data 
     return
 
