@@ -4,6 +4,7 @@ Script to find matching energy from different line lists
 """
 
 import pandas as pd
+import warnings
 
 def match_single_energy(tag :str, energy : float, energy_col : int, match_data : pd.DataFrame) -> pd.Series:
     if tag in match_data.index:
@@ -17,7 +18,9 @@ def match_single_energy(tag :str, energy : float, energy_col : int, match_data :
         nearest_index = partial_data.loc[:,energy_col].sub(energy).abs().idxmin()
         return partial_data.loc[nearest_index,:].rename(tag)
     else:
-        return None
+        warning_message = f"Warning no match for tag = {tag}, and energy = {energy}"
+        warnings.warn(UserWarning(warning_message) )
+        return pd.Series( [0]*match_data.shape[1] , name=tag )
     
 def combine_rows(Marvel_row : pd.Series, match_data : pd.DataFrame, Marvel_energy_col : int, ExMol_energy_col : int) -> pd.Series:
     tag = Marvel_row.name
